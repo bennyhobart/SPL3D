@@ -30,18 +30,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="nunit.framework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Contact.cs" />
-    <Compile Include="PhysicsBody.cs" />
-    <Compile Include="PhysicsEngine.cs" />
-    <Compile Include="PhysicsModel.cs" />
-    <Compile Include="Quadtree.cs" />
-    <Compile Include="Sphere.cs" />
-    <Compile Include="SpheresBody.cs" />
-    <Compile Include="TerrainBody.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="src\Contact.cs" />
+    <Compile Include="src\PhysicsBody.cs" />
+    <Compile Include="src\PhysicsEngine.cs" />
+    <Compile Include="src\PhysicsModel.cs" />
+    <Compile Include="src\SpheresBody.cs" />
+    <Compile Include="src\TerrainBody.cs" />
+    <Compile Include="src\Utils.cs" />
+    <Compile Include="src\Octtree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="test\" />
+    <Folder Include="src\" />
+  </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SPL3D
 {
-    public class PhysicsModel
+	public class PhysicsModel : Cube
     {
         public PhysicsBody bodyDefinition;
         public float invmass;
@@ -17,8 +17,6 @@ namespace SPL3D
         public float restitution;
         public List<Contact> contacts;
         public float friction;
-        public int Width;
-        public int Height;
         public object extraData;
 
         public void Initialize(float mass, float restitution, float linearDamp, float friction, Vector3 iPosition, Vector3 iVelocity, PhysicsBody bodyDefinition)
@@ -28,48 +26,7 @@ namespace SPL3D
             position = iPosition;
             velocity = iVelocity;
             this.bodyDefinition = bodyDefinition;
-            if (bodyDefinition.GetType() == typeof(SpheresBody))
-            {
-                Height = 0;
-                Width = 0;
-                foreach (Sphere sphere in ((SpheresBody)bodyDefinition).spheres)
-                {
-                    int sphereWidth;
-                    int sphereHeight;
-                    if (sphere.position.X < 0)
-                    {
-                        sphereWidth = (int)(sphere.radius - sphere.position.X);
-                    }
-                    else
-                    {
-                        sphereWidth = (int)(sphere.radius + sphere.position.X);
-
-                    }
-                    if (sphere.position.Y < 0)
-                    {
-                        sphereHeight = (int)(sphere.radius - sphere.position.Y);
-                    }
-                    else
-                    {
-                        sphereHeight = (int)(sphere.radius + sphere.position.Y);
-                    }
-                    if (Height < sphereHeight)
-                    {
-
-                        Height = sphereHeight;
-                    }
-                    if (Width < sphereWidth)
-                    {
-                        Width = sphereWidth;
-                    }
-                }
-            }
-            else
-            {
-                TerrainBody target= (TerrainBody)bodyDefinition;
-                Width = (int)(target.xzScale*2);
-                Height = (int)(target.xzScale*2);
-            }
+			setupRectangleInterface();
             if (mass == 0)
             {
                 invmass = 0;
@@ -82,6 +39,61 @@ namespace SPL3D
             this.friction = friction;
             contacts = new List<Contact>();
         }
+
+		void setupRectangleInterface ()
+		{
+			if (bodyDefinition.GetType () == typeof(SpheresBody)) {
+				initSpheresBody ((SpheresBody)bodyDefinition);
+			} 
+			else if(bodyDefinition.GetType() == typeof(TerrainBody)){
+				initTerrainBody ((TerrainBody)bodyDefinition);
+			}
+		}
+
+		private void initSpheresBody(SpheresBody bodyDefinition) 
+		{
+			Height = 0;
+			Width = 0;
+			foreach (Sphere sphere in (bodyDefinition).spheres)
+			{
+				int sphereWidth;
+				int sphereHeight;
+				if (sphere.position.X < 0)
+				{
+					sphereWidth = (int)(sphere.radius - sphere.position.X);
+				}
+				else
+				{
+					sphereWidth = (int)(sphere.radius + sphere.position.X);
+
+				}
+				if (sphere.position.Y < 0)
+				{
+					sphereHeight = (int)(sphere.radius - sphere.position.Y);
+				}
+				else
+				{
+					sphereHeight = (int)(sphere.radius + sphere.position.Y);
+				}
+				if (Height < sphereHeight)
+				{
+
+					Height = sphereHeight;
+				}
+				if (Width < sphereWidth)
+				{
+					Width = sphereWidth;
+				}
+			}
+
+		}
+
+		void initTerrainBody (TerrainBody terrainBody)
+		{
+			TerrainBody target= (TerrainBody)bodyDefinition;
+			Width = (int)(target.xzScale*2);
+			Height = (int)(target.xzScale * 2);
+		}
 
         public void ApplyForce(Vector3 force)
         {

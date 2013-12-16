@@ -12,7 +12,7 @@ namespace SPL3D
         public float xzScale;
         public Vector3 up;
         
-        public TerrainBody(PhysicsModel parent,float[,] points, float xzScale) : base(BodyType.terrain, parent)
+		public TerrainBody(PhysicsModel parent,float[,] points, float xzScale) : base(BodyType.terrain, parent)
         {
             bodyType = BodyType.terrain;
             this.points = points;

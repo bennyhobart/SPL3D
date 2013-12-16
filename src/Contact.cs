@@ -32,9 +32,5 @@ namespace SPL3D
             distance = normal.Length();
             normal = -Vector3.UnitY;
         }
-        public override String ToString()
-        {
-            return ("Normal :" + normal.ToString() + " Distance :" + distance);
-        }
     }
 }

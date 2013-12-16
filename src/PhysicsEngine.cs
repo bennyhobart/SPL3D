@@ -19,14 +19,14 @@ namespace SPL3D
         List<PhysicsModel> bodies;
         private const int numberOfResolutionIterations = 8;
         private const float gravity= -9.8f;
-        private Quadtree collisionTree;
+		private Octtree<PhysicsModel> collisionTree;
 
         public PhysicsEngine()
         {
-			Rectangle WorldBounds = new Rectangle (0, 0, 10, 10);
+			Cube WorldBounds = new Cube (0, 0, 0, 10, 10, 10);
             bodies = new List<PhysicsModel>();
             contacts = new List<Contact>();
-			collisionTree = new Quadtree(0,WorldBounds);
+			collisionTree = new Octtree<PhysicsModel>(0,WorldBounds);
         }
         
         public void step(float dt){
@@ -160,7 +160,7 @@ namespace SPL3D
             foreach (PhysicsModel body in bodies)
             {
                 possibleCollisions.Clear();
-                possibleCollisions = BroadPhaseCollision(possibleCollisions,body);
+				possibleCollisions = BroadPhaseCollision(possibleCollisions,body);
                 
                 foreach (PhysicsModel target in possibleCollisions)
                 {
@@ -174,7 +174,7 @@ namespace SPL3D
             }                        
         }
 
-        private List<PhysicsModel> BroadPhaseCollision(List<PhysicsModel> possibleCollisions, PhysicsModel body)
+		private List<PhysicsModel> BroadPhaseCollision(List<PhysicsModel> possibleCollisions, PhysicsModel body)
         {
             if (body.bodyDefinition.bodyType == BodyType.passive || body.bodyDefinition.bodyType == BodyType.terrain || body.bodyDefinition.bodyType == BodyType.stationary)
             {

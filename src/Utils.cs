@@ -2,16 +2,38 @@ using System;
 
 namespace SPL3D
 {
-	public class Rectangle 
+	public class Sphere
 	{
-		public int X,Y,Width,Height;
-		public Rectangle(int X,int Y,int Width, int Height)
+		public Vector3 position;
+		public float radius;
+		public Sphere(Vector3 position, float radius)
+		{
+			this.position = position;
+			this.radius = radius;
+		}
+	}
+	public class Cube 
+	{
+		public int X,Y,Z,Width,Height,Depth;
+		public Cube(int X,int Y,int Z,int Width, int Height, int Depth)
 		{
 			this.Width = Width;
 			this.Height = Height;
 			this.X = X;
 			this.Y = Y;
+			this.Z = Z;
 		}
+		public Cube()
+		{
+			Width = 0;
+			Height = 0;
+			Depth = 0;
+			X = 0;
+			Y = 0;
+			Z = 0;
+		}
+
+
 
 	}
 	public class Vector3 {
